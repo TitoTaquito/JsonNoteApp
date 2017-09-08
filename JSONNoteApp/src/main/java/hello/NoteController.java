@@ -21,6 +21,10 @@ public class NoteController {
     @ResponseBody @RequestMapping(value = "/api/notes",headers = "Content-Type= application/json", method = RequestMethod.POST)
     public Note postNote(@RequestBody String body) {
     	counter ++;
+        if(!body.contains(":")) {
+    		System.err.println("Not a valid parameter.  Make sure your json object dosn't have spaces next to colons.\nex: '{\"body\":\"this example\"}' as opposed to '{\"body\" : \"this example\"}'");
+    		return null;
+    	}
     	body=body.substring(body.indexOf(':')+1).replace("}'", "").trim();
     	Note n= new Note(counter,body);
     	map.put(counter, body);
